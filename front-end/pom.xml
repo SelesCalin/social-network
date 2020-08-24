@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>front-end</artifactId>
+    <name>front-end</name>
+
+
+    <parent>
+        <groupId>com.dababy</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <frontend.src.dir>webapp/</frontend.src.dir>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+        <angular.build.args></angular.build.args>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/</directory>
+                            <includes>
+                                <include>dist/</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.7.5</version>
+                <configuration>
+                    <nodeVersion>${node.version}</nodeVersion>
+                    <npmVersion>${npm.version}</npmVersion>
+                    <workingDirectory>${frontend.src.dir}</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prod</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run-script build</arguments>
+                        </configuration>
+                        <phase>generate-resources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
